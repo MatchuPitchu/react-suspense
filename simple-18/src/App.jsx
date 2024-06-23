@@ -1,18 +1,19 @@
-import { Suspense } from "react";
+import { Suspense } from 'react';
 
-import memoize from "./memoize";
+import memoize from './memoize';
 
+// Promise Handling needed by React 18 to handle Suspense
 function wrapPromise(promise) {
-  let status = "pending";
+  let status = 'pending';
   let response;
 
   const suspender = promise.then(
     (res) => {
-      status = "success";
+      status = 'success';
       response = res;
     },
     (err) => {
-      status = "error";
+      status = 'error';
       response = err;
     }
   );
@@ -31,12 +32,7 @@ function wrapPromise(promise) {
 
 const getTime = memoize((id) =>
   wrapPromise(
-    new Promise((resolve) =>
-      setTimeout(
-        () => resolve(`${id} = started ${new Date().toLocaleTimeString()}`),
-        1000
-      )
-    )
+    new Promise((resolve) => setTimeout(() => resolve(`${id} = started ${new Date().toLocaleTimeString()}`), 1000))
   )
 );
 
@@ -50,8 +46,8 @@ function App() {
     <>
       <h1>React 18 - Simple</h1>
       <Suspense fallback={<h2>Top level suspense...</h2>}>
-        <TimeFetcher id="time1" />
-        <TimeFetcher id="time2" />
+        <TimeFetcher id='time1' />
+        <TimeFetcher id='time2' />
       </Suspense>
     </>
   );
